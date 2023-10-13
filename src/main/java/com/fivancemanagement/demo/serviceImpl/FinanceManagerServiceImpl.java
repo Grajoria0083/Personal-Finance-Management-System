@@ -1,9 +1,9 @@
-package com.fivance_management.demo.serviceImpl;
+package com.fivancemanagement.demo.serviceImpl;
 
-import com.fivance_management.demo.exception.CustomerException;
-import com.fivance_management.demo.exception.TransactionException;
-import com.fivance_management.demo.model.*;
-import com.fivance_management.demo.service.FinanceManagerService;
+import com.fivancemanagement.demo.exception.CustomerException;
+import com.fivancemanagement.demo.exception.TransactionException;
+import com.fivancemanagement.demo.model.*;
+import com.fivancemanagement.demo.service.FinanceManagerService;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -64,7 +64,7 @@ public class FinanceManagerServiceImpl implements FinanceManagerService {
         if (userTransactionMap.containsKey(email)){
 
             List<Transaction> transactions = userTransactionMap.get(email);
-            List<Budget> budgets = userBudgetMap.get(email);
+            List<Budget> budgetList = userBudgetMap.get(email);
 
             int totalExpenses = 0;
             for (Transaction transaction:transactions){
@@ -72,7 +72,8 @@ public class FinanceManagerServiceImpl implements FinanceManagerService {
                     totalExpenses += transaction.getAmount();
             }
 
-            for (Budget budget:budgets){
+
+            for (Budget budget:budgetList){
                 if (budget.getCategory().equals(category)){
                     totalExpenses += amount;
                     if (totalExpenses>budget.getLimit()){
@@ -96,11 +97,11 @@ public class FinanceManagerServiceImpl implements FinanceManagerService {
 
         if (userBudgetMap.containsKey(email)){
 
-            List<Budget> budgets = userBudgetMap.get(email);
+            List<Budget> budget = userBudgetMap.get(email);
 
-            budgets.add(new Budget(category, limit));
+            budget.add(new Budget(category, limit));
 
-            userBudgetMap.put(email, budgets);
+            userBudgetMap.put(email, budget);
         }
         else {
             throw new CustomerException("invalid id!");

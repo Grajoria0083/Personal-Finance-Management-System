@@ -1,13 +1,12 @@
-package com.fivance_management.demo;
+package com.fivancemanagement.demo;
 
-import com.fivance_management.demo.exception.CustomerException;
-import com.fivance_management.demo.exception.TransactionException;
-import com.fivance_management.demo.model.User;
-import com.fivance_management.demo.serviceImpl.FinanceManagerServiceImpl;
-import com.fivance_management.demo.util.Util;
+import com.fivancemanagement.demo.exception.CustomerException;
+import com.fivancemanagement.demo.exception.TransactionException;
+import com.fivancemanagement.demo.model.User;
+import com.fivancemanagement.demo.serviceImpl.FinanceManagerServiceImpl;
+import com.fivancemanagement.demo.util.Util;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
 
@@ -47,7 +46,7 @@ public class PersonalFinanceManagementApplication {
 					String mobile = scanner.next();
 					System.out.print("Enter income: ");
 					int income = scanner.nextInt();
-					String result = financeManager.addUser(new User(name, email, mobile, income));
+					String result = financeManager.addUser(new User(name, mobile, email, income));
 					System.out.println(result);
 					break;
 				case 2:

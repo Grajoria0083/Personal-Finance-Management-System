@@ -1,17 +1,13 @@
-package com.fivance_management.demo.serviceImpl;
+package com.fivancemanagement.demo.serviceImpl;
 
-import com.fivance_management.demo.exception.CustomerException;
-import com.fivance_management.demo.exception.TransactionException;
-import com.fivance_management.demo.model.Transaction;
-import com.fivance_management.demo.model.User;
-import org.junit.Before;
+import com.fivancemanagement.demo.exception.CustomerException;
+import com.fivancemanagement.demo.exception.TransactionException;
+import com.fivancemanagement.demo.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.web.embedded.undertow.UndertowServletWebServer;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

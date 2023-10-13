@@ -1,7 +1,7 @@
-package com.fivance_management.demo.util;
+package com.fivancemanagement.demo.util;
 
-import com.fivance_management.demo.model.Budget;
-import com.fivance_management.demo.serviceImpl.FinanceManagerServiceImpl;
+import com.fivancemanagement.demo.model.Budget;
+import com.fivancemanagement.demo.serviceImpl.FinanceManagerServiceImpl;
 
 import java.util.List;
 import java.util.Map;

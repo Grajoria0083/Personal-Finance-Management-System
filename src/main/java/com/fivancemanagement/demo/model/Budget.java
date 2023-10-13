@@ -1,4 +1,4 @@
-package com.fivance_management.demo.model;
+package com.fivancemanagement.demo.model;
 
 public class Budget {
 

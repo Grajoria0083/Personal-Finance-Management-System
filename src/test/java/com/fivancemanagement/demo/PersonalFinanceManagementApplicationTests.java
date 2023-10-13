@@ -1,4 +1,4 @@
-package com.fivance_management.demo;
+package com.fivancemanagement.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

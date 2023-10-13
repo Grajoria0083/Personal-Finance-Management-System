@@ -1,9 +1,9 @@
-package com.fivance_management.demo.service;
+package com.fivancemanagement.demo.service;
 
-import com.fivance_management.demo.exception.CustomerException;
-import com.fivance_management.demo.exception.TransactionException;
-import com.fivance_management.demo.model.Transaction;
-import com.fivance_management.demo.model.User;
+import com.fivancemanagement.demo.exception.CustomerException;
+import com.fivancemanagement.demo.exception.TransactionException;
+import com.fivancemanagement.demo.model.Transaction;
+import com.fivancemanagement.demo.model.User;
 
 import java.time.LocalDate;
 import java.util.List;

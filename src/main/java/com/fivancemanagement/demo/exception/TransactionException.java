@@ -1,4 +1,4 @@
-package com.fivance_management.demo.exception;
+package com.fivancemanagement.demo.exception;
 
 public class TransactionException extends Exception{
 
