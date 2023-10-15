@@ -25,7 +25,7 @@ public interface FinanceManagerService {
 
     public void getUsers();
 
-    public void setGoal(String email, String des, int amount);
+    public void setGoal(String email, String des, int amount) throws CustomerException;
 
     public Map<String, List<Transaction>> getTransactions();
 }

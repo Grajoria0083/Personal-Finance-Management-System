@@ -71,14 +71,24 @@ class FinanceManagerServiceImplTest {
     }
 
     @Test
-    void calculateTotalExpenses() {
+    void calculateTotalExpenses() throws CustomerException {
+
+        String email = "aman@gmail";
+        LocalDate startDate = LocalDate.of(2023, 9,01);
+        LocalDate endDate = LocalDate.now();
+
+
+
+        assertEquals(3700,financeManagerService.calculateTotalExpenses(email, startDate, endDate));
+
+        Assertions.assertDoesNotThrow(
+                () -> financeManagerService.calculateTotalExpenses(email, startDate, endDate));
+
+        CustomerException customerException = Assertions.assertThrows(CustomerException.class, () -> {
+            financeManagerService.calculateTotalExpenses("amit@gmail", startDate, endDate);
+        });
+        Assertions.assertEquals("invalid id!", customerException.getMessage());
+
     }
 
-    @Test
-    void generateReport() {
-    }
-
-    @Test
-    void getSavings() {
-    }
 }

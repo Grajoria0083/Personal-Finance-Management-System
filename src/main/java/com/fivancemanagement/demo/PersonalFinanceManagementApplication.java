@@ -6,7 +6,13 @@ import com.fivancemanagement.demo.model.User;
 import com.fivancemanagement.demo.serviceImpl.FinanceManagerServiceImpl;
 import com.fivancemanagement.demo.util.Util;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -29,11 +35,15 @@ public class PersonalFinanceManagementApplication {
 			System.out.println("7. Set Goal");
 			System.out.println("8. Get User");
 			System.out.println("9. Get Transaction");
+			System.out.println("10. Get Budget");
 
 			int choice = scanner.nextInt();
 
 			String email;
 			String category;
+			LocalDate startDate;
+			LocalDate endDate;
+			List<LocalDate> localDates = new ArrayList<>();
 
 			switch (choice) {
 
@@ -52,8 +62,7 @@ public class PersonalFinanceManagementApplication {
 				case 2:
 					System.out.print("Enter email: ");
 					email = scanner.next();
-					System.out.print("Enter category: ");
-					category = scanner.next();
+					category = util.selectCatagory();
 					System.out.print("Enter budget limit: ");
 					double limit = scanner.nextDouble();
 					try {
@@ -83,10 +92,31 @@ public class PersonalFinanceManagementApplication {
 				case 4:
 					System.out.print("Enter email: ");
 					email = scanner.next();
-					System.out.print("Enter Starting Date: ");
-					LocalDate startDate = LocalDate.parse(scanner.next());
-					System.out.print("Enter Ending Date: ");
-					LocalDate endDate = LocalDate.parse(scanner.next());
+					System.out.print("1. Fixed Duration: ");
+					System.out.print("2. Custume Duration : ");
+					choice = scanner.nextInt();
+					if (choice==1){
+						System.out.print("1. Weekly Report : ");
+						System.out.print("2. Monthly Report: ");
+						System.out.print("3. Yearly Report : ");
+						choice = scanner.nextInt();
+						if (choice==1){
+							localDates = util.getLastWeek();
+						}
+						else if (choice==2){
+							localDates = util.getLastMonth();
+						}
+						else {
+							localDates = util.getLastYear();
+						}
+						startDate = localDates.get(0);
+						endDate = localDates.get(1);
+					}else {
+						System.out.print("Enter Starting Date: ");
+						startDate = LocalDate.parse(scanner.next());
+						System.out.print("Enter Ending Date: ");
+						endDate = LocalDate.parse(scanner.next());
+					}
 					try {
 						financeManager.generateReport(email, startDate, endDate);
 					} catch (CustomerException e) {
@@ -124,12 +154,20 @@ public class PersonalFinanceManagementApplication {
 				String goal = scanner.next();
 				System.out.print("Enter amount: ");
 				amount = scanner.nextInt();
-				financeManager.setGoal(email, goal, (int) amount);
+					try {
+						financeManager.setGoal(email, goal, (int) amount);
+					} catch (CustomerException e) {
+						System.out.println(e.toString());
+					}
+					break;
 				case 8:
 					financeManager.getUsers();
 					break;
 				case 9:
 					System.out.println(financeManager.getTransactions());
+					break;
+				case 10:
+					System.out.println(financeManager.getBudgets());
 					break;
 				default:
 					System.out.println("Invalid choice. Please try again.");
