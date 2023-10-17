@@ -1,10 +1,13 @@
-package com.fivancemanagement.demo.serviceImpl;
+package com.financemanagement.demo.serviceImpl;
 
-import com.fivancemanagement.demo.exception.CustomerException;
-import com.fivancemanagement.demo.exception.TransactionException;
-import com.fivancemanagement.demo.model.*;
-import com.fivancemanagement.demo.service.FinanceManagerService;
-import com.fivancemanagement.demo.util.Util;
+import com.financemanagement.demo.exception.TransactionException;
+import com.financemanagement.demo.model.Budget;
+import com.financemanagement.demo.model.Goal;
+import com.financemanagement.demo.model.Transaction;
+import com.financemanagement.demo.model.User;
+import com.financemanagement.demo.service.FinanceManagerService;
+import com.financemanagement.demo.exception.CustomerException;
+import com.financemanagement.demo.util.Util;
 
 
 import java.time.LocalDate;
@@ -48,14 +51,19 @@ public class FinanceManagerServiceImpl implements FinanceManagerService {
     }
 
     @Override
-    public String addUser(User user) {
+    public String addUser(User user) throws InputMismatchException {
 
-        users.add(user);
-        userTransactionMap.put(user.getEmail(), new ArrayList<Transaction>());
-        userBudgetMap.put(user.getEmail(), new ArrayList<Budget>());
-        budgetObj.setTotalBdgetLimit(user.getIncome());
+        try {
+            users.add(user);
+            userTransactionMap.put(user.getEmail(), new ArrayList<Transaction>());
+            userBudgetMap.put(user.getEmail(), new ArrayList<Budget>());
+            budgetObj.setTotalBdgetLimit(user.getIncome());
 
-        return "user has registerd successfully!";
+            return "user has registerd successfully!";
+        }
+        catch (InputMismatchException exception){
+            throw new InputMismatchException("Please enter value correctly!");
+        }
     }
 
     @Override
@@ -74,7 +82,7 @@ public class FinanceManagerServiceImpl implements FinanceManagerService {
                         throw new TransactionException("buget is crossing it limit for catagory : "+category);
                     }
                     else {
-                        if (userGoalMap.get(email).getDescription().equals(category)){
+                        if (!userGoalMap.isEmpty() && userGoalMap.get(email).getDescription().equals(category)){
                             System.out.println("you have set a Goal for : "+category);
                             System.out.println("Ener 1 for continou, and 2 for cancel the Transaction");
                             Scanner scanner = new Scanner(System.in);
@@ -163,16 +171,14 @@ public class FinanceManagerServiceImpl implements FinanceManagerService {
     @Override
     public double getSavings (String email) throws CustomerException {
 
-            Util util = new Util();
-            List<LocalDate> localDates = util.getLastMonth();
-            LocalDate startDate = localDates.get(0);
-            LocalDate endTate = localDates.get(1);
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.withDayOfMonth(1);
 
             double totalExpenses;
 
             for (User user : users) {
                 if (user.getEmail().equals(email)) {
-                    totalExpenses = calculateTotalExpenses(email, startDate, endTate);
+                    totalExpenses = calculateTotalExpenses(email, startDate, endDate);
                     return user.getIncome() - totalExpenses;
                 }
             }

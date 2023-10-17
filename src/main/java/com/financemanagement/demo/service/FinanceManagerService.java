@@ -1,17 +1,18 @@
-package com.fivancemanagement.demo.service;
+package com.financemanagement.demo.service;
 
-import com.fivancemanagement.demo.exception.CustomerException;
-import com.fivancemanagement.demo.exception.TransactionException;
-import com.fivancemanagement.demo.model.Transaction;
-import com.fivancemanagement.demo.model.User;
+import com.financemanagement.demo.exception.CustomerException;
+import com.financemanagement.demo.exception.TransactionException;
+import com.financemanagement.demo.model.Transaction;
+import com.financemanagement.demo.model.User;
 
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 
 public interface FinanceManagerService {
 
-    String addUser(User user);
+    String addUser(User user) throws InputMismatchException;
 
     String addTransaction(String email, String category, double amount, LocalDate localDate) throws CustomerException, TransactionException;
 

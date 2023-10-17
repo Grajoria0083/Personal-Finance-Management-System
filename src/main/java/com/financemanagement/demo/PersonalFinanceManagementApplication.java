@@ -1,13 +1,14 @@
-package com.fivancemanagement.demo;
+package com.financemanagement.demo;
 
-import com.fivancemanagement.demo.exception.CustomerException;
-import com.fivancemanagement.demo.exception.TransactionException;
-import com.fivancemanagement.demo.model.User;
-import com.fivancemanagement.demo.serviceImpl.FinanceManagerServiceImpl;
-import com.fivancemanagement.demo.util.Util;
+import com.financemanagement.demo.exception.TransactionException;
+import com.financemanagement.demo.exception.CustomerException;
+import com.financemanagement.demo.model.User;
+import com.financemanagement.demo.serviceImpl.FinanceManagerServiceImpl;
+import com.financemanagement.demo.util.Util;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,6 +21,8 @@ public class PersonalFinanceManagementApplication {
 		Util util = new Util();
 		Scanner scanner = new Scanner(System.in);
 
+
+
 		while (true) {
 			System.out.println("Select an option:");
 			System.out.println("1. Resister User");
@@ -27,7 +30,7 @@ public class PersonalFinanceManagementApplication {
 			System.out.println("3. Add Transaction");
 			System.out.println("4. Generate Report");
 			System.out.println("5. Calculate Total Expenses");
-			System.out.println("6. Get Saving");
+			System.out.println("6. Check Saving");
 			System.out.println("7. Set Goal");
 			System.out.println("8. Get User");
 			System.out.println("9. Get Transaction");
@@ -44,16 +47,27 @@ public class PersonalFinanceManagementApplication {
 			switch (choice) {
 
 				case 1:
-					System.out.print("Enter name: ");
-					String name = scanner.next();
-					System.out.print("Enter email: ");
-					email = scanner.next();
-					System.out.print("Enter mobileNo: ");
-					String mobile = scanner.next();
-					System.out.print("Enter income: ");
-					int income = scanner.nextInt();
-					String result = financeManager.addUser(new User(name, mobile, email, income));
-					System.out.println(result);
+					try {
+						System.out.print("Enter name: ");
+						String name = scanner.next();
+						System.out.print("Enter email: ");
+						email = scanner.next();
+						System.out.print("Enter mobileNo: ");
+						String mobile = scanner.next();
+						System.out.print("Enter income: ");
+						var income = scanner.nextInt();
+//						if (income instanceof Integer){
+//
+//						}
+						String result = financeManager.addUser(new User(name, mobile, email, income));
+						System.out.println(result);
+					}catch (InputMismatchException exception){
+						System.out.println(exception.getMessage());
+					}
+					catch (Exception exception){
+						System.out.println(exception.getMessage());
+					}
+
 					break;
 				case 2:
 					System.out.print("Enter email: ");
@@ -70,20 +84,20 @@ public class PersonalFinanceManagementApplication {
 				case 3:
 					System.out.print("Enter email: ");
 					email = scanner.next();
-//					category = util.setCatagory(email);
 					System.out.print("Enter category: ");
+//					category = util.setCatagory(email);
 					category = scanner.next();
 					System.out.print("Enter amount: ");
 					double amount = scanner.nextDouble();
 					String transactionResult = null;
 					try {
 						transactionResult = financeManager.addTransaction(email, category, amount, LocalDate.now());
+						System.out.println(transactionResult);
 					} catch (CustomerException e) {
 						System.out.println(e);
 					} catch (TransactionException e) {
 						System.out.println(e);
 					}
-					System.out.println(transactionResult);
 					break;
 				case 4:
 					System.out.print("Enter email: ");
@@ -97,13 +111,13 @@ public class PersonalFinanceManagementApplication {
 						System.out.print("3. Yearly Report : ");
 						choice = scanner.nextInt();
 						if (choice==1){
-							localDates = util.getLastWeek();
+							localDates = util.getDateByvalue(7);
 						}
 						else if (choice==2){
-							localDates = util.getLastMonth();
+							localDates = util.getDateByvalue(30);
 						}
 						else {
-							localDates = util.getLastYear();
+							localDates = util.getDateByvalue(365);
 						}
 						startDate = localDates.get(0);
 						endDate = localDates.get(1);
@@ -138,7 +152,7 @@ public class PersonalFinanceManagementApplication {
 					System.out.print("Enter email: ");
 					email = scanner.next();
 					try {
-						System.out.println("Saving of Last Month : "+financeManager.getSavings(email));
+						System.out.println("Saving of This Month : "+financeManager.getSavings(email));
 					} catch (CustomerException e) {
 						System.out.println(e);
 					}

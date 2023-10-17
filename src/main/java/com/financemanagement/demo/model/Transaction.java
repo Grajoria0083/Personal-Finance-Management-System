@@ -1,4 +1,4 @@
-package com.fivancemanagement.demo.model;
+package com.financemanagement.demo.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

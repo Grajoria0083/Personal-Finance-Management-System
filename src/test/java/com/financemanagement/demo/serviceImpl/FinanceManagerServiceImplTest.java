@@ -1,8 +1,8 @@
-package com.fivancemanagement.demo.serviceImpl;
+package com.financemanagement.demo.serviceImpl;
 
-import com.fivancemanagement.demo.exception.CustomerException;
-import com.fivancemanagement.demo.exception.TransactionException;
-import com.fivancemanagement.demo.model.User;
+import com.financemanagement.demo.exception.CustomerException;
+import com.financemanagement.demo.exception.TransactionException;
+import com.financemanagement.demo.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

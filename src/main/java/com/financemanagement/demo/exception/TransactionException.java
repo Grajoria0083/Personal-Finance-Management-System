@@ -1,4 +1,4 @@
-package com.fivancemanagement.demo.exception;
+package com.financemanagement.demo.exception;
 
 public class TransactionException extends Exception{
 

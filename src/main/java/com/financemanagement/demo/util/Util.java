@@ -1,7 +1,7 @@
-package com.fivancemanagement.demo.util;
+package com.financemanagement.demo.util;
 
-import com.fivancemanagement.demo.model.Budget;
-import com.fivancemanagement.demo.serviceImpl.FinanceManagerServiceImpl;
+import com.financemanagement.demo.serviceImpl.FinanceManagerServiceImpl;
+import com.financemanagement.demo.model.Budget;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -19,12 +19,20 @@ public class Util {
 
     Scanner scanner = new Scanner(System.in);
 
+
+    public List<LocalDate> getDateByvalue(int day){
+
+        LocalDate endDate  = LocalDate.now();
+        LocalDate startDate = endDate.minusDays(day);
+        return Arrays.asList(startDate, endDate);
+    }
+
     public List<LocalDate> getLastWeek(){
 
         LocalDate currentDate = LocalDate.now();
-        LocalDate lastWeekStartDate = currentDate.minusWeeks(1).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        LocalDate lastWeekEndDate = currentDate.minusWeeks(1).with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
-
+        LocalDate lastWeekStartDate = currentDate.minusWeeks(7);
+        LocalDate lastWeekEndDate = currentDate.minusWeeks(1);
+        System.out.println("lastWeekEndDate "+lastWeekEndDate);
         return Arrays.asList(lastWeekStartDate, lastWeekEndDate);
     }
 

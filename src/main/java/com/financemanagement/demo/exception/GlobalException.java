@@ -1,4 +1,4 @@
-package com.fivancemanagement.demo.exception;
+package com.financemanagement.demo.exception;
 
 
 import org.springframework.http.HttpStatus;
