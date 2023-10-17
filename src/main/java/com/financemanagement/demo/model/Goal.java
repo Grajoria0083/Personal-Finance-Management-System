@@ -25,4 +25,16 @@ public class Goal {
     public void setSavings(int savings) {
         this.savings = savings;
     }
+
+    @Override
+    public String toString() {
+        return "Goal{" +
+                "description='" + description + '\'' +
+                ", savings=" + savings +
+                '}';
+    }
 }
+
+
+
+

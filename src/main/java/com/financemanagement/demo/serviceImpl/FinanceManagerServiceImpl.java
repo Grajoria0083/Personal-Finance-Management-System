@@ -202,6 +202,7 @@ public class FinanceManagerServiceImpl implements FinanceManagerService {
             }
             else
                 userGoalMap.put(email, new Goal(des, amount));
+            System.out.println(userGoalMap.get(email).toString());
                 System.out.println("Goal add Successfully!");
         }
         else
