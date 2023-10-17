@@ -15,7 +15,7 @@ public interface FinanceManagerService {
 
     String addTransaction(String email, String category, double amount, LocalDate localDate) throws CustomerException, TransactionException;
 
-    public void setBudget(String email, String category, double limit) throws CustomerException;
+    public String setBudget(String email, String category, double limit) throws CustomerException;
 
     public double calculateTotalExpenses(String email, LocalDate startDate, LocalDate endDate) throws CustomerException;
 

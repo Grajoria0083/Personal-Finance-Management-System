@@ -22,6 +22,8 @@ class FinanceManagerServiceImplTest {
     }
 
 
+
+
     @Test
     void addUser() {
 
@@ -35,6 +37,7 @@ class FinanceManagerServiceImplTest {
         String result = financeManagerService.addUser(user);
 
         assertEquals(result, "user has registerd successfully!");
+
     }
 
 
@@ -66,29 +69,50 @@ class FinanceManagerServiceImplTest {
 
     }
 
-    @Test
-    void setBudget() {
-    }
 
     @Test
     void calculateTotalExpenses() throws CustomerException {
 
         String email = "aman@gmail";
-        LocalDate startDate = LocalDate.of(2023, 9,01);
+        LocalDate startDate1 = LocalDate.of(2023, 9,01);
+        LocalDate startDate2 = LocalDate.of(2023, 10,01);
         LocalDate endDate = LocalDate.now();
 
 
 
-        assertEquals(3700,financeManagerService.calculateTotalExpenses(email, startDate, endDate));
+        assertEquals(3700,financeManagerService.calculateTotalExpenses(email, startDate1, endDate));
+        assertEquals(1400,financeManagerService.calculateTotalExpenses(email, startDate2, endDate));
 
         Assertions.assertDoesNotThrow(
-                () -> financeManagerService.calculateTotalExpenses(email, startDate, endDate));
+                () -> financeManagerService.calculateTotalExpenses(email, startDate1, endDate));
 
         CustomerException customerException = Assertions.assertThrows(CustomerException.class, () -> {
-            financeManagerService.calculateTotalExpenses("amit@gmail", startDate, endDate);
+            financeManagerService.calculateTotalExpenses("amit@gmail", startDate1, endDate);
         });
         Assertions.assertEquals("invalid id!", customerException.getMessage());
 
     }
 
+
+    @Test
+    void setBudget() throws CustomerException{
+
+        String email = "aman@gmail";
+        String category = "Shoping";
+        double limit = 500;
+
+        String email2 = "amit@gmail";
+        String category2 = "Traveling";
+        double limit2 = 700;
+
+        assertEquals("Budget is getting over to income. Avalible Budget is : 0.0", financeManagerService.setBudget(email, category, limit));
+
+        Assertions.assertDoesNotThrow(
+                () -> financeManagerService.setBudget(email, category, limit))
+        ;
+                        CustomerException customerException = Assertions.assertThrows(CustomerException.class, () -> {
+            financeManagerService.setBudget(email2, category2, limit2);
+        });
+
+    }
 }

@@ -19,8 +19,6 @@ public class Util {
 
     Scanner scanner = new Scanner(System.in);
 
-
-
     public List<LocalDate> getLastWeek(){
 
         LocalDate currentDate = LocalDate.now();

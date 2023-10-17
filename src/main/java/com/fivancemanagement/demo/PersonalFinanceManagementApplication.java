@@ -6,11 +6,7 @@ import com.fivancemanagement.demo.model.User;
 import com.fivancemanagement.demo.serviceImpl.FinanceManagerServiceImpl;
 import com.fivancemanagement.demo.util.Util;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Year;
-import java.time.YearMonth;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -66,7 +62,7 @@ public class PersonalFinanceManagementApplication {
 					System.out.print("Enter budget limit: ");
 					double limit = scanner.nextDouble();
 					try {
-						financeManager.setBudget(email, category, limit);
+						System.out.println(financeManager.setBudget(email, category, limit));
 					} catch (CustomerException e) {
 						System.out.println(e);
 					}

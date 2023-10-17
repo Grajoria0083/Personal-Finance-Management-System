@@ -6,11 +6,8 @@ import com.fivancemanagement.demo.model.*;
 import com.fivancemanagement.demo.service.FinanceManagerService;
 import com.fivancemanagement.demo.util.Util;
 
-import java.time.DayOfWeek;
+
 import java.time.LocalDate;
-import java.time.Year;
-import java.time.YearMonth;
-import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 public class FinanceManagerServiceImpl implements FinanceManagerService {
@@ -20,9 +17,6 @@ public class FinanceManagerServiceImpl implements FinanceManagerService {
     Map<String, List<Budget>> userBudgetMap = new HashMap<>();
     Map<String, Goal> userGoalMap = new HashMap<>();
     List<User> users = new ArrayList<>();
-    List<Report> reports = new ArrayList<>();
-    List<Budget> budgets = new ArrayList<>();
-
     Budget budgetObj = new Budget();
 
 
@@ -69,7 +63,6 @@ public class FinanceManagerServiceImpl implements FinanceManagerService {
 
         if (!userTransactionMap.isEmpty() && userTransactionMap.containsKey(email)){
 
-
             List<Transaction> transactions = userTransactionMap.get(email);
             List<Budget> budgetList = userBudgetMap.get(email);
 
@@ -87,8 +80,7 @@ public class FinanceManagerServiceImpl implements FinanceManagerService {
                             Scanner scanner = new Scanner(System.in);
                             int choice = scanner.nextInt();
                             if (choice==2){
-                                System.out.println("Thanks for saving money for your goal");
-                                return null;
+                                return "Thanks for saving money for your goal";
                             }
                         }
                         budget.setLimit(budget.getLimit()-amount);
@@ -110,7 +102,7 @@ public class FinanceManagerServiceImpl implements FinanceManagerService {
     }
 
     @Override
-    public void setBudget(String email, String category, double limit) throws CustomerException {
+    public String setBudget(String email, String category, double limit) throws CustomerException {
 
         if (!userBudgetMap.isEmpty() && userBudgetMap.containsKey(email)){
 
@@ -120,10 +112,10 @@ public class FinanceManagerServiceImpl implements FinanceManagerService {
                 budgetObj.setCurentBudget(budgetObj.getCurentBudget()+limit);
                 budget.add(new Budget(category, limit));
                 userBudgetMap.put(email, budget);
+                return "Budget set successfully!";
             }
             else {
-                System.out.println("Budget is getting over to income");
-                System.out.println("Avalible Budget is : "+(budgetObj.getTotalBdgetLimit()- budgetObj.getCurentBudget()));
+                return "Budget is getting over to income. Avalible Budget is : "+(budgetObj.getTotalBdgetLimit()- budgetObj.getCurentBudget());
             }
         }
         else {
@@ -163,17 +155,18 @@ public class FinanceManagerServiceImpl implements FinanceManagerService {
                 }
             }
         }
+        else {
+            throw new CustomerException("invalid id!");
+        }
     }
 
-        @Override
-        public double getSavings (String email) throws CustomerException {
+    @Override
+    public double getSavings (String email) throws CustomerException {
 
             Util util = new Util();
             List<LocalDate> localDates = util.getLastMonth();
             LocalDate startDate = localDates.get(0);
             LocalDate endTate = localDates.get(1);
-//            LocalDate startDate = LocalDate.of(2023, 10, 01);
-//            LocalDate endTate = LocalDate.of(2023, 10, 30);
 
             double totalExpenses;
 
@@ -203,36 +196,36 @@ public class FinanceManagerServiceImpl implements FinanceManagerService {
             }
             else
                 userGoalMap.put(email, new Goal(des, amount));
-            System.out.println("Goal add Successfully!");
+                System.out.println("Goal add Successfully!");
         }
         else
             throw new CustomerException("invalid Id!");
     }
 
-    public List<Transaction> getTransactionList (String email) {
+    public List<Transaction> getTransactionList (String email) throws CustomerException {
 
         if (userTransactionMap.containsKey(email)) {
 
             return userTransactionMap.get(email);
         }
 
-        return null;
+        throw new CustomerException("invalid Id!");
     }
 
-        public List<Budget> getBudgetList(String email){
+    public List<Budget> getBudgetList(String email) throws CustomerException {
 
             if (userBudgetMap.containsKey(email)) {
 
                 return userBudgetMap.get(email);
             }
 
-            return null;
+            throw new CustomerException("Invalid id");
         }
 
 
 
     @Override
-        public Map<String, List<Transaction>> getTransactions () {
+    public Map<String, List<Transaction>> getTransactions () {
             return userTransactionMap;
         }
 
